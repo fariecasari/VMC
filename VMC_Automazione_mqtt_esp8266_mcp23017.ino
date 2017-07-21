@@ -1,10 +1,8 @@
 
-
-
-
 /*
+  FarieCasari 21/07/2017
   Basic ESP8266 MQTT example
-
+  
   This sketch demonstrates the capabilities of the pubsub library in combination
   with the ESP8266 board/library.
 
@@ -93,7 +91,7 @@ void setup_wifi() {
 
 void callback(char* topic, byte* payload, unsigned int length) {
   // long value = 0;
-
+  char buffer[10];
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
@@ -103,7 +101,12 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   }
 
-  int value = 22;
+  int value;// = 22;
+  memcpy((char *)buffer,(char *)payload,length);  //buffer <=== payload
+  buffer[length]=0; //chiudo il buffer
+  value = atoi(buffer);//converto il buffer ad un intero
+  //value = atoi((char *)payload);
+
   velocita(value);
   Serial.println();
 
